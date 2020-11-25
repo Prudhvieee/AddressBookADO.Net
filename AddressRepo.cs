@@ -58,5 +58,34 @@ namespace AddressBookADO.Net
                 this.sqlconnection.Close();
             }
         }
+        public bool UpdateTables()
+        {
+            string query = @"update AddressBook_Table set state = 'india' where firstname = 'tom'";
+            using (this.sqlconnection)
+            {
+                try
+                {
+                    this.sqlconnection.Open();
+                    SqlCommand command = new SqlCommand(query, this.sqlconnection);
+                    int updatedRows = command.ExecuteNonQuery();
+                    if (updatedRows != 0)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                catch (Exception exception)
+                {
+                    throw new Exception(exception.Message);
+                }
+                finally
+                {
+                    this.sqlconnection.Close();
+                }
+            }
+        }
     }
 }
