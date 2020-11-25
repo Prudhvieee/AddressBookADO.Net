@@ -87,5 +87,53 @@ namespace AddressBookADO.Net
                 }
             }
         }
+        public List<string> GetDataInParticularRange()
+        {
+            AddressBookModel addressBookModel = new AddressBookModel();
+            List<string> data = new List<string>();
+            try
+            {
+                using (this.sqlconnection)
+                {
+                    string query = @"SELECT * FROM AddressBook_Table where addedDate between CAST('2018-02-01' AS DATE) AND SYSDATETIME()";
+                    SqlCommand command = new SqlCommand(query, sqlconnection);
+                    this.sqlconnection.Open();
+                    SqlDataReader dataReader = command.ExecuteReader();
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            addressBookModel.firstName = dataReader.GetString(0);
+                            addressBookModel.secondName = dataReader.GetString(1);
+                            addressBookModel.address = dataReader.GetString(2);
+                            addressBookModel.city = dataReader.GetString(3);
+                            addressBookModel.state = dataReader.GetString(4);
+                            addressBookModel.zip = dataReader.GetInt64(5);
+                            addressBookModel.phoneNumber = dataReader.GetInt64(6);
+                            addressBookModel.emailid = dataReader.GetString(7);
+                            addressBookModel.contactType = dataReader.GetString(8);
+                            addressBookModel.addressBookName = dataReader.GetString(9);
+                            Console.WriteLine("\n");
+                            data.Add(addressBookModel.firstName);
+                            Console.WriteLine(addressBookModel.firstName);
+                        }
+                        dataReader.Close();
+                        return data;
+                    }
+                    else
+                    {
+                        throw new Exception("No data found");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                this.sqlconnection.Close();
+            }
+        }
     }
 }
