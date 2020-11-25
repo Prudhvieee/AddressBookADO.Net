@@ -7,6 +7,8 @@ namespace AddressBookADO.Net
         public static void Main(string[] args)
         {
             Console.WriteLine("Welcome to address book DB");
+            AddressRepo addressRepo = new AddressRepo();
+            addressRepo.GetAllEmployee();
         }
     }
 }
