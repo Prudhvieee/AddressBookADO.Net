@@ -6,6 +6,7 @@ namespace AddressBookADO.Net
 {
     public class AddressBookModel
     {
+
         public string firstName { get; set; }
         public string secondName { get; set; }
         public string address { get; set; }

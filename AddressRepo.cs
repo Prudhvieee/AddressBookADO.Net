@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Text;
 
@@ -169,6 +170,45 @@ namespace AddressBookADO.Net
             {
                 this.sqlconnection.Close();
             }
+        }
+        public bool AddContact(AddressBookModel addressBookModel)
+        {
+            try
+            {
+                using (this.sqlconnection)
+                {
+                    SqlCommand sqlCommand = new SqlCommand("spAddContact", this.sqlconnection);
+                    sqlCommand.CommandType = CommandType.StoredProcedure;
+                    sqlCommand.Parameters.AddWithValue("@Nfirstame", addressBookModel.firstName);
+                    sqlCommand.Parameters.AddWithValue("@secondName", addressBookModel.secondName);
+                    sqlCommand.Parameters.AddWithValue("@address", addressBookModel.address);
+                    sqlCommand.Parameters.AddWithValue("@city", addressBookModel.city);
+                    sqlCommand.Parameters.AddWithValue("@state", addressBookModel.state);
+                    sqlCommand.Parameters.AddWithValue("@zip", addressBookModel.zip);
+                    sqlCommand.Parameters.AddWithValue("@", addressBookModel.phoneNumber);
+                    sqlCommand.Parameters.AddWithValue("@emailid", addressBookModel.emailid);
+                    sqlCommand.Parameters.AddWithValue("@contactType", addressBookModel.contactType);
+                    sqlCommand.Parameters.AddWithValue("@addressBookName", addressBookModel.addressBookName);
+                    sqlCommand.Parameters.AddWithValue("@addedDate", DateTime.Now);
+                    this.sqlconnection.Open();
+                    var result = sqlCommand.ExecuteNonQuery();
+                    this.sqlconnection.Close();
+                    if (result != 0)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception.Message);
+            }
+            finally
+            {
+                this.sqlconnection.Close();
+            }
+            return false;
         }
     }
 }
