@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace AddressBookADO.Net
 {
@@ -20,6 +21,10 @@ namespace AddressBookADO.Net
             addressBookModel.contactType = "Professional";
             addressBookModel.addressBookName = "Office";
             addressRepo.AddContact(addressBookModel);
+            ThreadOperations th = new ThreadOperations();
+            List<AddressBookModel> listContacts = new List<AddressBookModel>();
+            th.AddContactListToDBWithoutThread(listContacts);
+            th.AddContactListToDBWithThread(listContacts);
         }
     }
 }

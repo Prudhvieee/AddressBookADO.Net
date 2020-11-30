@@ -61,7 +61,7 @@ namespace AddressBookADO.Net
         }
         public bool UpdateTables()
         {
-            string query = @"update AddressBook_Table set state = 'india' where firstname = 'tom'";
+            string query = @"update AddressBook_Table set city = 'BLR' where firstname = 'tom'";
             using (this.sqlconnection)
             {
                 try
@@ -179,13 +179,13 @@ namespace AddressBookADO.Net
                 {
                     SqlCommand sqlCommand = new SqlCommand("spAddContact", this.sqlconnection);
                     sqlCommand.CommandType = CommandType.StoredProcedure;
-                    sqlCommand.Parameters.AddWithValue("@Nfirstame", addressBookModel.firstName);
+                    sqlCommand.Parameters.AddWithValue("@firstName", addressBookModel.firstName);
                     sqlCommand.Parameters.AddWithValue("@secondName", addressBookModel.secondName);
                     sqlCommand.Parameters.AddWithValue("@address", addressBookModel.address);
                     sqlCommand.Parameters.AddWithValue("@city", addressBookModel.city);
                     sqlCommand.Parameters.AddWithValue("@state", addressBookModel.state);
                     sqlCommand.Parameters.AddWithValue("@zip", addressBookModel.zip);
-                    sqlCommand.Parameters.AddWithValue("@", addressBookModel.phoneNumber);
+                    sqlCommand.Parameters.AddWithValue("@phoneNumber", addressBookModel.phoneNumber);
                     sqlCommand.Parameters.AddWithValue("@emailid", addressBookModel.emailid);
                     sqlCommand.Parameters.AddWithValue("@contactType", addressBookModel.contactType);
                     sqlCommand.Parameters.AddWithValue("@addressBookName", addressBookModel.addressBookName);
